@@ -17,12 +17,30 @@ const PORT = process.env.PORT || 4000;
 initDb();
 
 // Middlewares globales
+const allowedOrigins = [
+  "http://localhost:5173",                  // Frontend local (Vite)
+  "https://inventario-simple-app.vercel.app" // Frontend en Vercel
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
-    credentials: true
+    origin: function (origin, callback) {
+      // Permite requests sin origin (Postman, curl, healthchecks)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    }
+    // credentials NO es necesario porque usas JWT por header
   })
 );
+
+// Preflight
+app.options("*", cors());
+
 app.use(express.json());
 
 // Rutas
@@ -38,5 +56,5 @@ app.get("/", (req, res) => {
 
 // Arranque del servidor
 app.listen(PORT, () => {
-  console.log(`Servidor escuchando en http://localhost:${PORT}`);
+  console.log(`Servidor escuchando en puerto ${PORT}`);
 });
