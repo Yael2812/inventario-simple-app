@@ -10,6 +10,14 @@ Aplicación web de inventario desarrollada como proyecto personal full stack.
 
 ---
 
+## 🖼️ Vista previa de la aplicación
+
+<img src="assets/screenshots/inventory-flow.png" width="900" />
+
+_Vista general del flujo principal y la gestión del inventario._
+
+---
+
 ## 📁 Estructura del proyecto
 
 - **client/** → Frontend en React + Vite + Tailwind CSS  
